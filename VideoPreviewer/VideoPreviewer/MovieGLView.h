@@ -30,6 +30,7 @@
 - (void)render: (VideoFrameYUV *) frame;
 //clear buffer, render a black image
 - (void)clear;
+- (UIImage *)imageFromCurrentFrame;
 
 @end
 

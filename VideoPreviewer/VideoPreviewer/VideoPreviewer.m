@@ -1059,6 +1059,10 @@ static VideoPreviewer* previewer = nil;
 
     if (!dropFrame) {
         [_glView render:frame];
+        if([self.delegate respondsToSelector:@selector(videoPreviewerDidDecompressFrame:)]) {
+            UIImage *image = [_glView imageFromCurrentFrame];
+            [self.delegate videoPreviewerDidDecompressFrame:image];
+        }
     }
 
     glViewRenderFrameCount++;
@@ -1225,6 +1229,13 @@ static VideoPreviewer* previewer = nil;
 }
 
 #pragma mark - videotoolbox decode callback
+- (void) decoderDidDecompress:(CVImageBufferRef)imageBuffer timestamp:(CMTime)presentationTimeStamp
+                    duration:(CMTime)presentationDuration {
+    if([_delegate respondsToSelector:@selector(videoPreviewerDidDecompressFrame:timestamp:duration:)]) {
+        [_delegate videoPreviewerDidDecompressFrame:imageBuffer timestamp:presentationTimeStamp
+                                           duration:presentationDuration];
+    }
+}
 
 //handle 264 frame output from videotoolbox
 -(void) decompressedFrame:(CVImageBufferRef)image frameInfo:(VideoFrameH264Raw *)frame

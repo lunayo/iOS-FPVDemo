@@ -501,6 +501,10 @@ NSString *const renderToScreenFS = SHADER_STRING
     [_dataSource renderBlack];
 }
 
+- (UIImage *)imageFromCurrentFrame {
+    return [_dataSource imageFromCurrentFramebuffer];
+}
+
 - (void)render: (VideoFrameYUV *) frame
 {
     [self.renderLock lock];

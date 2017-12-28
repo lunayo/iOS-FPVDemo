@@ -56,6 +56,12 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 
 #pragma mark - data input
 
+@protocol VideoPreviewerDelegate <NSObject>
+@optional
+- (void)videoPreviewerDidDecompressFrame:(UIImage *)image;
+- (void)videoPreviewerDidDecompressFrame:(CVImageBufferRef)imageBuffer timestamp:(CMTime)presentationTimeStamp duration:(CMTime)presentationDuration;
+@end
+
 /**
  *  UI component used to show the video feed streamed from DJI device. FFmpeg is
  *  required. It consists of decoder, data buffer queue and OpenGL renderer。
@@ -123,6 +129,8 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 @end
 
 @interface VideoPreviewer ()
+
+@property (weak, nonatomic) id<VideoPreviewerDelegate> delegate;
 
 /**
  *  rotation of the preview content
