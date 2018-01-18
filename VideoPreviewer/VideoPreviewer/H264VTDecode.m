@@ -7,6 +7,7 @@
 #import <UIKit/UIKit.h>
 #import "H264VTDecode.h"
 #import "DJIVideoHelper.h"
+#import "DJIVTH264DecoderIFrameData.h"
 //#import "DJILogCenter.h"
 
 #define INFO(fmt, ...) //DJILog(@"[VTDecoder]"fmt, ##__VA_ARGS__)
@@ -373,7 +374,7 @@ void DJIHWDecoderDidDecompress( void *decompressionOutputRefCon, void *sourceFra
     info.frame_width = dimension.width;
     info.frame_height = dimension.height;
     info.encoder_type = (int)_encoderType;
-    int prebuildFrameSize = loadPrebuildIframe(au_buf, AU_MAX_SIZE, info);
+    int prebuildFrameSize = loadPrebuildIframePrivate(au_buf, AU_MAX_SIZE, info);
     if (prebuildFrameSize <= 0) {
         ERROR(@"prebuild iframe not found:%d %dx%d p%d" ,
               info.encoder_type, info.frame_width, info.frame_height, info.fps);
