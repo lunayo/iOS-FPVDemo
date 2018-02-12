@@ -49,6 +49,9 @@ void DJIHWDecoderDidDecompress( void *decompressionOutputRefCon, void *sourceFra
     
     if (!status && imageBuffer) {
         decoder.decodeErrorCount = 0;
+        if([decoder.delegate respondsToSelector:@selector(decoderDidDecompress:timestamp:duration:)]) {
+            [decoder.delegate decoderDidDecompress:imageBuffer timestamp:presentationTimeStamp duration:presentationDuration];
+        }
         if ([decoder.delegate respondsToSelector:@selector(decompressedFrame:frameInfo:)]) {
             
             VideoFrameH264Raw* rawFrame = nil;

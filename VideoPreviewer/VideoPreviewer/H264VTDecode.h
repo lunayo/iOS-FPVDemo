@@ -15,6 +15,7 @@
 @optional
 // called when the frame decompression is finished
 -(void) decompressedFrame:(CVImageBufferRef)image frameInfo:(VideoFrameH264Raw*)frame;
+- (void) decoderDidDecompress:(CVImageBufferRef)imageBuffer timestamp:(CMTime)presentationTimeStamp duration:(CMTime)presentationDuration;
 // called when hardware decoder encounters exception.
 -(void) hardwareDecoderUnavailable;
 @end
